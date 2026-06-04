@@ -20,10 +20,21 @@ YAHOO_EMAIL   = os.environ.get("YAHOO_EMAIL",   "")
 
 _api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
-async def verify_api_key(key: str = Security(_api_key_header)):
-    if API_KEY and key != API_KEY:
+from fastapi import Request
+
+async def verify_api_key(request: Request, key: str = Security(_api_key_header)):
+    if not API_KEY:
+        return key
+    # Accept key via X-API-Key header or Authorization: Bearer <key>
+    bearer = request.headers.get("Authorization", "")
+    if bearer.startswith("Bearer "):
+        bearer = bearer[7:]
+    else:
+        bearer = None
+    candidate = key or bearer
+    if candidate != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API key")
-    return key
+    return candidate
 PROMPTS_DIR   = Path(os.environ.get("PROMPTS_DIR", Path(__file__).parent / "prompts"))
 DEFAULT_MODEL = os.environ.get("DEFAULT_MODEL", "")
 HIMALAYA      = os.path.expanduser("~/.local/bin/himalaya")
