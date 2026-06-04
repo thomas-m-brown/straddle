@@ -1,5 +1,7 @@
 # Straddle: An Autonomous Infrastructure Layer for Hermes
 
+![Straddle Logo](docs/logo.jpeg)
+
 Straddle is a unified infrastructure layer for [Hermes Agent](https://hermes-agent.nousresearch.com). It provides a robust backend gateway for automated task execution, persistent system prompts, and a centralized maintenance control panel that integrates directly into your Hermes WebUI.
 
 ## Why I built this
