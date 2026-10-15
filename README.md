@@ -1,44 +1,67 @@
-# Straddle: An Autonomous Infrastructure Layer for Hermes
+# Straddle: Autonomous Infrastructure Layer for Hermes Agent
+
+> [!NOTE]
+> **Status: Historical Precedent / Architectural Case Study**  
+> Straddle was designed and implemented **prior to Hermes Agent's native plugin architecture**. Core capabilities originally prototyped here—specifically autonomous Kanban task dispatching and 16k context window compression—have since been integrated directly into upstream [Hermes Agent](https://github.com/NousResearch/hermes-agent) via native plugins (`plugins/kanban`, `plugins/context_engine`).
+>
+> This repository is preserved as an architectural case study in extending autonomous agent runtimes, featuring formal [Architectural Decision Records (ADRs)](docs/adr/).
 
 ![Straddle Logo](docs/logo.jpeg)
 
-Straddle is a unified infrastructure layer for [Hermes Agent](https://hermes-agent.nousresearch.com). It provides a robust backend gateway for automated task execution, persistent system prompts, and a centralized maintenance control panel that integrates directly into your Hermes WebUI.
-
-## Why I built this
-
-I run Open WebUI, custom scripts, and various API clients — all pointing at Ollama on a local server. Each client needed its own configuration, system prompt, and endpoint. When I updated the system prompt I had to update it everywhere. When I wanted to add email context to responses, every client needed separate integration.
-
-Straddle solves that by sitting between every client and Ollama: one address, one system prompt to edit, one place to add context enrichment. All clients get the same behavior without any per-client config.
-
 ---
 
-## 🚀 Easy Install
-Run the automated installer:
-```bash
-curl -fsSL https://raw.githubusercontent.com/thomas-m-brown/straddle/main/install.sh | bash
+## Pre-Plugin Architecture & Data Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Client as WebUI / Script Client
+    participant Straddle as Straddle Proxy (:11434 Gateway)
+    participant Guard as Context Guard (16k Window)
+    participant Worker as Worker Nodes (Distributed Tailscale Mesh)
+    participant Ollama as Local Inference Runtime
+
+    Client->>Straddle: Task Request / User Prompt
+    Straddle->>Guard: Profile Active Trajectory Tokens
+    alt Token Count > 12k Threshold
+        Guard->>Guard: Trigger Sliding Summarization + Cold Archival
+    end
+    Straddle->>Worker: Offload RAG Embeddings / Background Jobs
+    Worker-->>Straddle: Enriched Metadata (iCloud / Calendar)
+    Straddle->>Ollama: Formatted Prompt + Dynamic Context Injection
+    Ollama-->>Straddle: Response Token Stream
+    Straddle-->>Client: Real-Time Stream to Client
 ```
 
 ---
 
-## 🛠 Features
-- **Autonomous Loop:** Automatically dispatches Kanban tasks to agent workers.
-- **Context Guard:** Hybrid compression logic (Summarize + Archive) ensures you stay within the 16k context window.
-- **Maintenance Panel:** A persistent control panel injected directly into your Hermes WebUI sidebar.
-- **Distributed Worker Nodes:** Offload RAG embeddings to secondary machines (e.g., Ideapad) to save Tower VRAM.
+## Engineering Highlights & Prior Art
+
+1. **Sliding-Window Context Guard**:
+   - Engineered hybrid compression logic (Sliding Summarize + Ephemeral Archival) to prevent context explosion on 16k token models without losing task grounding.
+2. **Distributed Workload Offloading**:
+   - Dispatched RAG embedding computations over a Tailscale private mesh to secondary edge nodes (e.g., Lenovo IdeaPad), preserving VRAM on primary GPU workstations (Tower).
+3. **Formal Architectural Decision Records (ADRs)**:
+   - Contains formal engineering trade-off documentation: See [ADR-0001: Sent Folder Check for Reply Detection](docs/adr/0001-sent-folder-check-for-reply-detection.md) detailing latency vs. consistency constraints in asynchronous email dispatch.
+4. **Unified Gateway Middleware**:
+   - Consolidated fragmented client configurations (Open WebUI, CLI tools, automation scripts) into a single upstream Ollama proxy with centralized prompt management.
 
 ---
 
-## 🔧 Troubleshooting
-If the Maintenance Panel or updates don't appear after installation, your browser is likely serving cached assets:
-1. **Hard Refresh:** 
-   - **Mac:** `Cmd + Shift + R`
-   - **Windows/Linux:** `Ctrl + F5`
-2. **Clear Cache:** If a hard refresh fails, clear your browser's site data/cache for the Tailscale address, then restart your browser.
+## Legacy Installation
 
----
+```bash
+curl -fsSL https://raw.githubusercontent.com/thomas-m-brown/straddle/main/install.sh | bash
+```
 
-## Requirements
+### Stack & Dependencies
 - Python 3.10+
-- Node.js (for WebUI rebuild)
-- Tailscale (for distributed worker nodes)
-- Ollama
+- Node.js (WebUI injection)
+- Tailscale (Mesh worker offloading)
+- Ollama inference backend
+
+---
+
+## License
+
+MIT
