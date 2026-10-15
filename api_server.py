@@ -11,7 +11,7 @@ from fastapi import Depends
 app = FastAPI()
 
 OLLAMA_URL    = os.environ.get("OLLAMA_URL",   "http://localhost:11434")
-HOST          = os.environ.get("STRADDLE_HOST", "100.118.201.46")
+HOST          = os.environ.get("STRADDLE_HOST", "127.0.0.1")
 PORT          = int(os.environ.get("STRADDLE_PORT", 11435))
 API_KEY       = os.environ.get("STRADDLE_API_KEY", "")
 ICLOUD_EMAIL  = os.environ.get("ICLOUD_EMAIL",  "")

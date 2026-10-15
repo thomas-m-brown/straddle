@@ -1,9 +1,9 @@
 # Thomas M. Brown — Resume
 
 ## Contact
-- Email: tom.mb99@icloud.com | Phone: (316) 945-6882
+- Email: [EMAIL_REDACTED] | Phone: [PHONE_REDACTED]
 - Location: Wichita, KS
-- LinkedIn: linkedin.com/in/thomas-m-brown | GitHub: github.com/equ1nox-git
+- LinkedIn: linkedin.com/in/thomas-m-brown | GitHub: github.com/thomas-m-brown
 
 ## Summary
 CS student at Butler Community College (4.0 GPA) pursuing remote platform and cloud engineering. Self-taught in Linux systems administration, Python/FastAPI, and local AI infrastructure. Background in electrical manufacturing QC brings process discipline, systematic troubleshooting, and documentation rigor to software environments. Transferring to WSU for BS Computer Science.

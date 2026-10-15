@@ -1,6 +1,7 @@
 #!/bin/bash
-# Pulls Inbox + Projects reminders from MacBook via osascript → writes to b450 cache
-RESULT=$(ssh -o ConnectTimeout=5 thomasb@100.120.230.78 "osascript <<'APPLE'
+# Pulls Inbox + Projects reminders via osascript
+SSH_TARGET="${MAC_SSH_TARGET:-user@macbook.local}"
+RESULT=$(ssh -o ConnectTimeout=5 "$SSH_TARGET" "osascript <<'APPLE'
 tell application \"Reminders\"
     set output to \"[\"
     set listNames to {\"Inbox\", \"Projects\"}

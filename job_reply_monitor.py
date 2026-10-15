@@ -32,12 +32,12 @@ HERMES_BIN   = "/home/thomasb/.local/bin/hermes"
 PENDING_DIR.mkdir(exist_ok=True)
 load_dotenv(BASE_DIR / ".env")
 
-STRADDLE_URL = os.environ.get("STRADDLE_URL", "http://100.118.201.46:11435")
+STRADDLE_URL = os.environ.get("STRADDLE_URL", "http://127.0.0.1:11435")
 API_KEY      = os.environ.get("STRADDLE_API_KEY", "")
 MODEL        = os.environ.get("DEFAULT_MODEL") or "qwen2.5:7b"
 
 ICLOUD = {
-    "email":     os.environ.get("ICLOUD_EMAIL", "tom.mb99@icloud.com"),
+    "email":     os.environ.get("ICLOUD_EMAIL", ""),
     "password":  os.environ.get("ICLOUD_PASS", ""),
     "imap_host": "imap.mail.me.com",
     "imap_port": 993,
@@ -224,9 +224,7 @@ He is actively job searching.
 
 {TONE_INSTRUCTIONS[tone]}
 
-Sign every reply exactly as:
-Thomas Brown
-tom.mb99@icloud.com | (316) 945-6882 | Wichita, KS
+Sign every reply professionally with the applicant's name and contact information.
 
 Use Thomas's background below only to inform tone and fit — do not quote it verbatim.
 Output ONLY the email body. No subject line. No preamble.

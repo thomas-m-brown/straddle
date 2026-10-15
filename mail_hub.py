@@ -23,7 +23,7 @@ CALDAV_URL       = f"https://caldav.icloud.com/{ICLOUD_PRINCIPAL}/principal/"
 MAIL_ACCOUNTS = [
     {
         "label":     "iCloud",
-        "email":     os.environ.get("ICLOUD_EMAIL",  "tom.mb99@icloud.com"),
+        "email":     os.environ.get("ICLOUD_EMAIL",  ""),
         "password":  os.environ.get("ICLOUD_PASS",   ""),
         "imap_host": "imap.mail.me.com",
         "imap_port": 993,
@@ -32,7 +32,7 @@ MAIL_ACCOUNTS = [
     },
     {
         "label":     "Gmail",
-        "email":     os.environ.get("GMAIL_EMAIL",   "tmb129129@gmail.com"),
+        "email":     os.environ.get("GMAIL_EMAIL",   ""),
         "password":  os.environ.get("GMAIL_PASS",    ""),
         "imap_host": "imap.gmail.com",
         "imap_port": 993,
@@ -41,7 +41,7 @@ MAIL_ACCOUNTS = [
     },
     {
         "label":     "Yahoo",
-        "email":     os.environ.get("YAHOO_EMAIL",   "tmb199922@yahoo.com"),
+        "email":     os.environ.get("YAHOO_EMAIL",   ""),
         "password":  os.environ.get("YAHOO_PASS",    ""),
         "imap_host": "imap.mail.yahoo.com",
         "imap_port": 993,

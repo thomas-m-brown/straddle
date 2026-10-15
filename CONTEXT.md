@@ -12,7 +12,7 @@ A drafted response awaiting Thomas's approval. States: `pending` → `sent` | `s
 LLM-generated reply body for a Pending Reply. Properties:
 - Tone category (one of three) drives content: Rejection, Interview, Ambiguous
 - Length: 3–5 sentences guideline, not hard-truncated
-- Signature email matches send account (iCloud → tom.mb99@icloud.com)
+- Signature email matches configured send account (e.g. iCloud, Gmail)
 - Resume file used to inform tone/fit only; no direct quoting
 - Temperature 0.4 (low creativity, consistent professional tone)
 

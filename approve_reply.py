@@ -28,7 +28,7 @@ EXPIRY_DAYS = 7
 load_dotenv(BASE_DIR / ".env")
 
 ICLOUD_ACC = {
-    "email":     os.environ.get("ICLOUD_EMAIL", "tom.mb99@icloud.com"),
+    "email":     os.environ.get("ICLOUD_EMAIL", ""),
     "password":  os.environ.get("ICLOUD_PASS", ""),
     "smtp_host": "smtp.mail.me.com",
     "smtp_port": 587,
